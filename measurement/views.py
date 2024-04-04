@@ -14,10 +14,9 @@ class Measurements(ListCreateAPIView):
     serializer_class = MeasurementSerializer
     def post(self, request):
         request_data = request.body.decode('utf-8')
-        request_data = json.loads(request_data)
-        obj_sens_id = Sensor.objects.filter(sensor_id=request_data['sensors'])
-        data = Measurement.objects.create(obj_sens_id, request_data['temperature'], datetime.now())
-        return Response({'message': f'Информация по датчику успешно записана, id:{data.id}'})
+        daict_data = json.loads(request_data)
+        data = Measurement.objects.create(sensors_id=daict_data['sensors'], temperature=daict_data['temperature'], datetime=datetime.now())
+        return Response({'message': 'Информация датчика успешно записана, id:{data.id}'})
 
 
 class Sensors(ListCreateAPIView):
